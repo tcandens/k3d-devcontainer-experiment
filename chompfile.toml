@@ -1,0 +1,24 @@
+version = 0.1
+default-task = 'build'
+
+[[task]]
+name = 'build'
+run = 'echo \"Build script goes here\"'
+
+[[task]]
+name = 'setup'
+run = '''
+  k3d cluster create -c k3d.config.yml
+  ark install istio
+  kubectl label namespace default istio-injection=enabled
+'''
+
+[[task]]
+name = 'nuke'
+run = '''
+  k3d cluster delete -c k3d.config.yml
+'''
+
+[[task]]
+name = 'dev'
+run = 'skaffold dev --default-repo registry.localhost:5000'

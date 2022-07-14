@@ -53,7 +53,7 @@ RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/sk
 ## INstall PNPM
 # RUN npm install --global pnpm
 
-RUN npm install -g chomp
+# RUN npm install --global chomp
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.
