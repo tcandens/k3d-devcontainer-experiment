@@ -23,3 +23,19 @@ Once this is finished you should be able to start program with helper task.
 ```bash
 chomp dev
 ```
+
+# Apple Silicon Instruction
+On M1 Macbooks, you will not be able to install stock Istio operator on your cluster since it is not yet officially supported. Please follow [these instructions](https://github.com/resf/istio).
+
+__Do not use the default provided chomp setup command.__
+
+>> Note: This setup requires port 5000 to be available. OSX recently started running services on that port which you will need to disable. "System Preferences" > "Sharing" > Uncheck "AirPlay Receiver". Double check the port is free by ensure there are no results for `lsof -i TCP:5000`
+
+>> If you are using Docker Desktop, you will need to allow insecure access to the local container registry that was created for the cluster. Check the "Dashboard" > "Preferences" > "Docker Engine" > Then add the "registry.localhost:5000" to the array of "insecure-registries"
+
+From integrated terminal window:
+```
+ark get istioctl
+istioctl operator init --hub=ghcr.io/resf/istio --tag 1.12.8
+kubectl apply -f m1-istio.yaml
+```
