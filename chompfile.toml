@@ -1,12 +1,9 @@
 version = 0.1
-default-task = 'build'
-
-[[task]]
-name = 'build'
-run = 'echo \"Build script goes here\"'
+default-task = 'dev'
 
 [[task]]
 name = 'setup'
+targets = ['k3d.config.yml']
 run = '''
   k3d cluster create -c k3d.config.yml
   ark install istio
@@ -21,4 +18,13 @@ run = '''
 
 [[task]]
 name = 'dev'
+deps = ['setup']
 run = 'skaffold dev --default-repo registry.localhost:5000'
+
+[[task]]
+name = 'list'
+args = ['DIRECTORY']
+echo = true
+run = '''
+  ls ${{ DIRECTORY }}
+'''

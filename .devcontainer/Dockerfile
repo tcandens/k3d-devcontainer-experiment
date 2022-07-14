@@ -55,6 +55,14 @@ RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/sk
 
 # RUN npm install --global chomp
 
+# Install Node version manager 
+# RUN curl -fsSL https://fnm.vercel.app/install | bash
+# Using Ubuntu
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+
+RUN npm install --global chomp
+
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
