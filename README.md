@@ -1,5 +1,26 @@
 # Notes
 
-Just set `network_mode: "host"` in the devcontainer service!
+Create the cluster with local container registry.
+```
+k3d cluster create -c k3d.config.yml
+```
 
-To push Docker images to the cluster registry, tag the image with `umbrella-registry` and add `127.0.0.1  umbrella-registry` to your `/etc/hosts` file.
+Then you must install Istio.
+
+```
+ark install istio
+```
+
+Then make sure the default namespace has Istio injection enabled
+
+```
+kubectl label namespace default istio-injection=enabled
+```
+
+To start you must specify the skaffold default repo to match the one created by `k3d`.
+
+```
+skaffold dev --default-repo registry.localhost:5000
+```
+
+
