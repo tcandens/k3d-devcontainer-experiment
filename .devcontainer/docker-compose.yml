@@ -9,6 +9,7 @@ services:
         INSTALL_ZSH: "false"
         ENABLE_NONROOT_DOCKER: "false"
 
+    network_mode: "host"
     volumes:
       # Forwards the local Docker socket to the container.
       - /var/run/docker.sock:/var/run/docker-host.sock

@@ -28,12 +28,27 @@ RUN apt-get update \
 
 # Install Arkade
 RUN curl -sLS https://get.arkade.dev | sh
-# RUN export PATH="${PATH}:${HOME}/.arkade/bin"
-RUN arkade get k3d
-RUN arkade get kubectl
-## Install: helm
+RUN arkade get \
+    # k3d \
+    kubectx \
+    stern \
+    kubens \
+    krew \
+    k9s
 
-## Install skaffold?
+RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
+## Install Helm and Kubectl manually so that skaffold can find them
+# Install kubectl
+RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+    && chmod +x /usr/local/bin/kubectl
+
+# Install Helm
+RUN curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
+
+## Install skaffold
+RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+    install skaffold /usr/local/bin/
 
 ## INstall PNPM
 # RUN npm install --global pnpm

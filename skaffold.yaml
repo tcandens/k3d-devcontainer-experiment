@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: app
+build:
+  artifacts:
+  - image: app
+    context: .
+    # sync:
+    #   infer: ["**/*"]
+    docker:
+      dockerfile: Dockerfile
+  tagPolicy:
+    sha256: {} 
+  local:
+    push: true
+    useBuildkit: true
+deploy:
+  helm:
+    releases:
+    - name: app
+      chartPath: ./helm
+      # setValues:
+      #   "image.name": registry.localhost:5000/test-app
+      artifactOverrides:
+        image: 
+          name: app
+

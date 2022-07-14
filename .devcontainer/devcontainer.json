@@ -27,9 +27,10 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "./.devcontainer/post.sh",
+	// "postCreateCommand": "./.devcontainer/post.sh",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	// NOTE: this setup doesn't work with non-root. Can probably be sorted with some time and effort
 	// "remoteUser": "vscode",
 	"features": {
 		"node": "18"

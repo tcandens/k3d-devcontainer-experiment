@@ -14,14 +14,18 @@ ports:
 registries:
   create:
     name: registry.localhost
-    host: "0.0.0.0"
     hostPort: "5000"
-    proxy:
-      remoteURL: https://registry-1.docker.io
-      username: ""
-      password: ""
-    volumes:
-      - /mnt/k3d-registry
+  #   proxy:
+  #     remoteURL: https://registry-1.docker.io
+  #     username: ""
+  #     password: ""
+  #   volumes:
+  #     - /tmp/registry:/var/lib/registry
+  # config: |
+  #   mirrors:
+  #     "docker.io":
+  #       endpoint:
+  #         - http://registry.localhost:5001
 options:
   k3s:
     extraArgs:
