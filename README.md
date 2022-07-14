@@ -1,26 +1,25 @@
-# Notes
+## About
 
-Create the cluster with local container registry.
-```
-k3d cluster create -c k3d.config.yml
-```
+This repository shows an example workflow with VSCode devcontainer and k3s/k3d kubernetes cluster using host Docker runtime.
 
-Then you must install Istio.
+You'll need to have Docker and VSCode with required extensions.
 
-```
-ark install istio
-```
+Check this [Container Development](https://code.visualstudio.com/docs/remote/containers) guide for more details.
 
-Then make sure the default namespace has Istio injection enabled
+## Getting started
 
-```
-kubectl label namespace default istio-injection=enabled
-```
+Open this repository folder in container. [Instructions](https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container)
 
-To start you must specify the skaffold default repo to match the one created by `k3d`.
+Then run setup task in [container terminal](https://code.visualstudio.com/docs/remote/containers#_opening-a-terminal).
 
-```
-skaffold dev --default-repo registry.localhost:5000
+```bash
+chomp setup
 ```
 
+This will likely take a while as k8s cluster is created and Istio is installed.
 
+Once this is finished you should be able to start program with helper task.
+
+```bash
+chomp dev
+```

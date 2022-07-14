@@ -6,8 +6,8 @@ build:
   artifacts:
   - image: app
     context: .
-    # sync:
-    #   infer: ["**/*"]
+    sync:
+      infer: ["**/*"]
     docker:
       dockerfile: Dockerfile
   tagPolicy:
