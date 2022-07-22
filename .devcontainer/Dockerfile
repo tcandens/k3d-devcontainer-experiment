@@ -1,5 +1,5 @@
 # Note: You can use any Debian/Ubuntu based image you want. 
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-bullseye
+FROM --platform=linux/amd64 mcr.microsoft.com/vscode/devcontainers/base:0-bullseye
 
 # [Option] Install zsh
 ARG INSTALL_ZSH="true"
@@ -58,10 +58,20 @@ RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/sk
 # Install Node version manager 
 # RUN curl -fsSL https://fnm.vercel.app/install | bash
 # Using Ubuntu
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
 
-RUN npm install --global chomp
+# RUN npm install --global chomp
+
+# RUN curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+# RUN chmod +x mkcert-v*-linux-amd64
+# RUN mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+
+# Script copies localhost's ~/.kube/config file into the container and swaps out 
+# localhost for host.docker.internal on bash/zsh start to keep them in sync.
+COPY copy-kube-config.sh /usr/local/share/
+RUN chown root:root /usr/local/share/copy-kube-config.sh \
+    && echo "source /usr/local/share/copy-kube-config.sh" | tee -a /root/.bashrc /root/.zshrc ~/.bashrc >> ~/.zshrc
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.
