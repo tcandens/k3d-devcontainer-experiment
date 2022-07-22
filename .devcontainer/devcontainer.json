@@ -8,10 +8,10 @@
 
 	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true",
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-		"PATH": "${containerEnv:PATH}:~/.arkade/bin"
+		"PATH": "${containerEnv:PATH}:~/.arkade/bin:./bin"
 	},
-
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
@@ -22,7 +22,7 @@
 				"bungcip.better-toml"
 			]
 		}
-	},
+	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

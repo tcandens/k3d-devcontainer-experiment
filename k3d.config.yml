@@ -19,13 +19,13 @@ registries:
   #     remoteURL: https://registry-1.docker.io
   #     username: ""
   #     password: ""
-  #   volumes:
-  #     - /tmp/registry:/var/lib/registry
-  # config: |
-  #   mirrors:
-  #     "docker.io":
-  #       endpoint:
-  #         - http://registry.localhost:5001
+    volumes:
+      - /tmp/registry:/var/lib/registry
+  config: |
+    mirrors:
+      "localhost:5000":
+        endpoint:
+          - http://registry.localhost:5000
 options:
   k3s:
     extraArgs:

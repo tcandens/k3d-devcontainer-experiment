@@ -1,0 +1,42 @@
+#!/bin/bash
+PATH=./node_modules/.bin:$PATH
+
+
+function setup() {
+  echo "Installing Istio"
+  ark get istioctl
+  ark install istio
+    # istioctl operator init --hub=ghcr.io/resf/istio --tag 1.12.8
+    # kubectl apply -f m1-istio.yaml
+  echo "Starting private registry"
+  docker run -d -p 5000:5000 --restart=always --name registry registry:2
+  kubectl label namespace default istio-injection=enabled
+  skaffold config set default-repo localhost:5000
+}
+
+# function certs() {
+  # rm -rf tmp/certs
+  # mkdir -p tmp/certs
+  # cd tmp/certs
+  # openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=Zulily Developers/CN=zulily.com' -keyout zulily.com.key -out zulily.com.crt
+  # openssl req -out dev.zulily.com.csr -newkey rsa:2048 -nodes -keyout dev.zulily.com.key -subj "/CN=dev.zulily.com/O=Zulily Developers"
+  # openssl x509 -req -sha256 -days 365 -CA zulily.com.crt -CAkey zulily.com.key -set_serial 0 -in dev.zulily.com.csr -out dev.zulily.com.crt
+  # kubectl create -n istio-system secret tls gateway-credential --key=dev.zulily.com.key --cert=dev.zulily.com.crt
+# }
+
+function dev() {
+  skaffold dev
+}
+
+function default() {
+  dev
+}
+
+function help() {
+  echo "$0 <task> <args>"
+  echo "Tasks: "
+  compgen -A function | cat -n
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time ${@:-default}

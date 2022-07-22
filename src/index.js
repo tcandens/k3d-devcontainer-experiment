@@ -3,7 +3,7 @@ const Fastify = require('fastify')
 const app = Fastify()
 
 app.get('/hello/:name', async (req, reply) => {
-  reply.send(`Hola, ${String(req.params.name)}!`)
+  reply.send(`Hello, ${String(req.params.name)}!`)
 })
 
 app.get('/healthz', async (req, reply) => {

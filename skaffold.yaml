@@ -3,6 +3,9 @@ kind: Config
 metadata:
   name: app
 build:
+  insecureRegistries:
+  - registry.localhost:5002
+  - registry.localhost:5000
   artifacts:
   - image: app
     context: .
